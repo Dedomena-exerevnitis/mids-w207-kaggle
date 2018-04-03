@@ -89,13 +89,13 @@ After have thorough understanding of the problem and data, we are now working on
 - What steps are taken to prepare the data for modeling?
   - feature transformations? engineering?
 
-  [While examining, we noticed that the regular season statistics are not necessarily indicative of tournament performance due to the difference in competitiveness between leagues. In general, ACC, The American, A-10, Big 12, Big East, Big Ten, Mountain West, Pac-12, and SEC are seen as the most competitive leagues. Leagues such as the Patriot or Ivy league, while also Division I, are not typically as competitive. We will use aggregate statistics for win percentage in the tournament as a proxy for a league's competitiveness. This seems to track with general knowledge of the more competitive leagues, particularly, for women's basketball: ACC (0.55), The American (0.24), A-10 (0.27), Big 12 (0.54), Big East (0.39), Big Ten (0.44), Mountain West (0.17), Pac-12 (0.54), and SEC (0.59).
+    [While examining, we noticed that the regular season statistics are not necessarily indicative of tournament performance due to the difference in competitiveness between leagues. In general, ACC, The American, A-10, Big 12, Big East, Big Ten, Mountain West, Pac-12, and SEC are seen as the most competitive leagues. Leagues such as the Patriot or Ivy league, while also Division I, are not typically as competitive. We will use aggregate statistics for win percentage in the tournament as a proxy for a league's competitiveness. This seems to track with general knowledge of the more competitive leagues, particularly, for women's basketball: ACC (0.55), The American (0.24), A-10 (0.27), Big 12 (0.54), Big East (0.39), Big Ten (0.44), Mountain West (0.17), Pac-12 (0.54), and SEC (0.59).
 
-  Eventually, more transformation has to be done so that the input for each is a 'pairing' consisting of two teams + associated stats (which may include: past tournament performance, league membership, regular season game aggregate statistics, etc.) for each.
+    Eventually, more transformation has to be done so that the input for each is a 'pairing' consisting of two teams + associated stats (which may include: past tournament performance, league membership, regular season game aggregate statistics, etc.) for each.
 
   - table joins? aggregation?
 
-  Currently, data on regular season + postseason play + team/league information is in separate files, with statistics for each game played. We are adding to that aggregate statistics about the strength of each team playing as well. _to expand_
+    Currently, data on regular season + postseason play + team/league information is in separate files, with statistics for each game played. We are adding to that aggregate statistics about the strength of each team playing as well. _to expand_
 
 
 - Precise description of modeling base tables.
