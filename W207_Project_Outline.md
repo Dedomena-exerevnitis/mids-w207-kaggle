@@ -56,76 +56,79 @@ In this project, the data sets include historical data of tournaments and regula
 
   - Relationships between features
 
-    There 13 field performance features for each team in each game of tournaments or regular seasons (FGM, FGA, FGM3, FGA3, FTM, FTA, OR, DR, Ast, TO, Stl, Blk, PF). PCA, as a tool to reduce the dimension and do the feature construction, is used to examine the feasibility of aggregate all the filed features in to one feature, overall performance. However, after PCA, the first dimension only weights the 40% of the total variance of all features, and in order to reach the 90% variance, 6 dimensions need to be kept, which violets the purpose of using PCA to aggregate  filed features into one. Therefore this case is not suitable for using PCA for feature construction or dimension reduction, we turn to use seek for other ways of feature selection and construction.   
+    There are 13 field performance features for each team in each game of tournaments or regular seasons (FGM, FGA, FGM3, FGA3, FTM, FTA, OR, DR, Ast, TO, Stl, Blk, PF). These indicate 2 pointers made/attempted, 3 pointers made/attempted, free throws made/attempted, offensive/defensive rebounds, assists, time outs, steals, blocks, and personal fouls, respectively.
+    
+    PCA, as a tool to reduce the dimension and do the feature construction, is used to examine the feasibility of aggregating all these features into one feature, overall performance. However, after PCA, the first dimension only maintains 40% of the total variance of all features, and in order to reach the 90% variance, 6 dimensions need to be kept, which rather negates the purpose of PCA, as there are only 13 features to begin with. Therefore, for now, we believe that this case is not suitable for using PCA for feature construction or dimension reduction, we turn to other methods of feature selection and construction.  
 
-    Below is the insights of the relationship between those features and score margin :
+    Below are some insights about the relationship between those features and score margin, which we use as a proxy for success (it's imperfect at best, but is useful for regular season EDA, when teams are playing within their leagues):
 
-      **FGA** as field goal percentage: a higher field goal percentage difference is strongly associated with win margin.
+      **Field Goal Percentage Difference: WFGM/WFGA - LFGM/LFGA** Calculate the percentage of 2 point field goals made for winning and losing team, then determine the difference between the percentages. This field goal percentage difference is strongly associated with win margin.
 
-      **WFGM3/WFGA3 - LFGM3/LFGA3** as the 3 point field goal percentage difference: the correlation between 3 point field goal percentage difference and win margin is not too strong. This indicates that teams that win a game with a larger margin tend to have only slightly better 3 point field goal percentage than the losing team in that game.
-      Free throw performance by itself is not strongly associated with win margin. This is not surprising. Some teams have a lower 2 point field goal rate but they draw a larger number of personal fouls from the opposing team. This can lead to a difference in tactics of how the teams accumulate 2 point goals without impacting their overall success in scoring 2 point goals.
+      **Three-Point Field Goal Percentage Difference: WFGM3/WFGA3 - LFGM3/LFGA3** Similar to the above, we were able to calcualte the percentage of 3 point field goals made for both winning and losing teams. The correlation between 3 point field goal percentage difference and win margin is not too strong. This suggests that teams that win a game with a larger margin tend to have only slightly better 3 point field goal percentage than the losing team in that game.
+      
+      
+      **Free throw percentage: WFTM/WFTA** Free throw performance by itself is not strongly associated with win margin. This is not surprising. Some teams have a lower 2 point field goal rate but they draw a larger number of personal fouls from the opposing team. This can lead to a difference in tactics of how the teams accumulate 2 point goals without impacting their overall success in scoring 2 point goals.
 
-      **(WOR + WDR) - (LOR + LDR)** as relative performance in offensive and defensive rebounds: it has a significant correlation with win margin
+      **Rebound difference: (WOR + WDR) - (LOR + LDR)** Determine the difference between the number of rebounds achieved (both defensive and offensive) of winning and losing teams. This indicates relative performance in offensive and defensive rebounds: it has a significant correlation with win margin. 
 
-      **WAst - LAst** as relative performance in assists: it has a strong correlation with win margin. Assists indicate a more orchestrated style of play and may be an indicator how a team collaborates and creates opportunities on the field.
+      **Assist difference: WAst - LAst** as relative performance in assists: it has a strong correlation with win margin. Assists indicate a more orchestrated style of play and may be an indicator how a team collaborates and creates opportunities on the field.
 
-      **WStl - LStl** as relative performance in steals: it has a modest correlation with win margin.
+      **Steal difference: WStl - LStl** as relative performance in steals: it has a modest correlation with win margin.
 
       **OR + DR** as the rebound performance: the winning team's rebound performance is strongly associated with the number of field goal attempts. The correlation is less strong for the losing team.
 
     Then we explores how performance on different measures has impacted game outcomes over time. Over the years, the importance of field goal performance in determining game outcomes has remained constant whereas the importance of assists and rebounds in determining game outcomes has been rising.
 
-
   - Other idiosyncracies?
 
-    [JB] One thing that was very apparent in EDA is the overall dominance of the University of Connecticut team in regular season and tournament games. As compared to NCAA men's basketball, where the....
+    One thing that was very apparent in EDA is the overall dominance of the University of Connecticut team (and several other teams such as Notre Dame or Tennessee) in regular season and tournament games. As compared to NCAA men's basketball, few teams regularly achieve success in regular season and tournament play, UConn and these other teams have been the best for many years in a row, suggesting some other factor besides player-level skills (since turnover in college basketball is relatively high) contributes to the success (such as a coach, etc.). 
     
-     [todo], dated back to a number of years or a number of games played (constructing new feature: moving-average), in order to explore the data and prepare for feature selection and construction.
+     On that note, we plan to continue to explore the appropriate amount of data that should be used to predict tournament success. For example, it seems unlikely that performance in games in 1998 indicates success of a completely new team in 2018. We hypothesize that approximately a 5-year window may be most informative. 
 
 ## Ongoing work and plan for future  
 
-After have thorough understanding of the problem and data, we are now working on the data preparation and modeling before week 13. Blew is the draft of what achieved and planed so far for data preparation and modeling.  
+After this EDA and preliminary data understanding, we are now working on the data preparation and modeling before week 13. Below is the draft of what achieved and planed so far for data preparation and modeling.  
 
 ## Data Preparation
 
 - What steps are taken to prepare the data for modeling?
   - feature transformations? engineering?
 
-    [While examining, we noticed that the regular season statistics are not necessarily indicative of tournament performance due to the difference in competitiveness between leagues. In general, ACC, The American, A-10, Big 12, Big East, Big Ten, Mountain West, Pac-12, and SEC are seen as the most competitive leagues. Leagues such as the Patriot or Ivy league, while also Division I, are not typically as competitive. We will use aggregate statistics for win percentage in the tournament as a proxy for a league's competitiveness. This seems to track with general knowledge of the more competitive leagues, particularly, for women's basketball: ACC (0.55), The American (0.24), A-10 (0.27), Big 12 (0.54), Big East (0.39), Big Ten (0.44), Mountain West (0.17), Pac-12 (0.54), and SEC (0.59).
+    While conducting EDA, we noticed that the regular season statistics are not necessarily indicative of tournament performance due to the difference in competitiveness between leagues. In general, ACC, American Athletic Conference, A-10, Big 12, Big East, Big Ten, Mountain West, Pac-12, and SEC are seen as the most competitive leagues. Leagues such as the Patriot or Ivy leagues, while also Division I, are not typically as competitive. We will use aggregate statistics for win percentage in the tournament as an indicator of a league's competitiveness. This seems to track with general knowledge of the more competitive leagues, particularly for women's basketball: ACC (0.55), American (0.24), A-10 (0.27), Big 12 (0.54), Big East (0.39), Big Ten (0.44), Mountain West (0.17), Pac-12 (0.54), and SEC (0.59).
 
-    Eventually, more transformation has to be done so that the input for each is a 'pairing' consisting of two teams + associated stats (which may include: past tournament performance, league membership, regular season game aggregate statistics, etc.) for each.
+    Eventually, more transformation has to be done for training/prediction so that the input for each is a pairing consisting of two teams + associated stats (which may include, based on our exploration above: past tournament performance, league membership, regular season game aggregate statistics, etc.) for each team in the matchup.
 
   - table joins? aggregation?
 
-    Currently, data on regular season + postseason play + team/league information is in separate files, with statistics for each game played. We are adding to that aggregate statistics about the strength of each team playing as well. _to expand_
-
+    Currently, data on regular season + postseason play + team/league information is in separate files, with statistics for each game played. We are adding to that aggregate statistics about the strength of each team playing as well. 
 
 - Precise description of modeling base tables.
 
   - What are the rows/columns of X (the predictors)?
 
-    After finalizing the data preparation, especially feature selection and construction, we will have a detailed explanation of X.
+    After finalizing feature selection and construction, we will have a detailed explanation of X.
 
   - What is y (the target)?
 
-    The output data y for training and development data set is the win (1) or lose (0) label of the first team in the matchup for each game.
-    However, because we are predicting the winning probability by logistic model, the target of the deployment or the output of the model y is the probability that the first team (lowest team #) will win. To minimize duplication, team pairs are always listed with the smaller number team pair first.
+    The output data _y_ for training and development data set is the win (1) or loss (0) label of the first team in the matchup for each game.
+    
+    However, because we are predicting the winning probability by logistic model, the target of the deployment or the output of the model _y_ is the probability that the first team (lowest team #) will win. To minimize duplication, team pairs are always listed with the smaller number team id first.
 
 ## Modeling
 
 - Model that we are using
 
-  We plan to use a logistic regression model as the base model because we are dealing with a binary outcome (win vs. loss), and predicting the winning probability of the first team in each matchup. But we will try the concept of bootstrapping from random forest to improve the model.
+  We plan to use a logistic regression model as the base model because we are dealing with a binary outcome (win vs. loss), and predicting the winning probability of the first team in each matchup. But we may try the concept of bootstrapping from random forest to improve the model.
 
 - Assumptions
 
-  Because we are using the logistic regression, we assume
+  Because we are using logistic regression, we assume:
 
   1. the dependent variable to be binary
 
   2. each features or observation to be independent, and model have little or no multicollinearity
 
-  3. dependent (y) and independent (x) variables are linearly related to the log odds
+  3. dependent (_y_) and independent (_x_) variables are linearly related to the log odds
 
 - Regularization
 
@@ -134,4 +137,4 @@ After have thorough understanding of the problem and data, we are now working on
 
 ## Evaluation and Deployment
 
-After modeling is done, on week 14, we will step to the process of evaluation and deployment, which will be discussed in the coming groups meetings.  
+After modeling is done, on week 14, we will discuss the process of evaluation and deployment, which will be discussed in the coming groups meetings.  
