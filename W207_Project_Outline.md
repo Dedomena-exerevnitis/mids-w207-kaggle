@@ -5,10 +5,6 @@ This project is to use the history data about women college basketball games (bo
 
 ## Business Understanding
 
-- What problem are we trying solve?
-- What are the *relevant metrics*? How much do we plan to improve them?
-- What will we deliver?
-
 As mentioned in the brief introduction above, this project is on the purpose of modeling to predict the winning probabilities for every possible matchup of teams of the 2018 NCAA Women's tournament. The NCAA tournament is also well-known as March Madness, not only because it is happening in March, but also because the fast-pace elimination mechanism and the surprising results. Therefore, to build a better model and predict the result of the tournament is so interesting, and the prediction of the winning probabilities for every possible matchup become the first and critical part for predicting the NCAA bracket.  
 
 
@@ -42,15 +38,12 @@ In this project, the data sets include history data of tournaments and regular r
 - EDA
   - Distribution of each feature
 
+    [Arvindh] ADD HERE. It seems like Arvindh hasn't updated his file, so I only include the ideal of moving-average in the introduction of data understanding.
+
+
     Historical data on games played in tournaments back to 1998. Of the 364 teams, 252 of them have participated in the NCAA March Madness tournament since 1998. Median = 3. Mean = 5.33. Mode = 0,1. Nonzeros: 252/364. This indicates that 1) not all teams make it to the tournament, even over a 20 year period. Also, a higher mean than median suggests a positive skew, meaning that there are several teams that have appeared many times in the tournament (max = 21; UConn, Notre Dame, Stanford, Tennessee), but most teams appear infrequently or not at all.
 
     Our dataset also includes seeds for all teams in the tournament since 1998. Seeds are between 1 and 16, within each region (4 regions). Each year, there are 4 teams with seeds of each value. Some teams regularly perform well in the tournament, so we examined the average seed value for teams. The top 5 teams with the best (lowest) average seed are: UConn (1.24, 21 appearances), Duke (2, 20 appearances), Tennessee (2, 21 appearances), USC (2.56, 9 appearances), and Baylor (2.59, 17 appearances).
-
-
-  - Construction new feature, moving-average
-
-    [Arvindh] ADD HERE. It seems like Arvindh hasn't updated his file, so I only include the ideal of moving-average in the introduction of data understanding.
-
 
 
   - Missing values
@@ -89,9 +82,7 @@ In this project, the data sets include history data of tournaments and regular r
 
 ## Ongoing work and plan for future  
 
-After have thorough understanding of the problem and data, we are now working on the data preparation and modeling before week 13. Blew is the draft of what achieved and planed so far.  
-
-After modeling is done, on week 14, we will step to the process of evaluation and deployment, which will be discussed in the coming groups meetings.  
+After have thorough understanding of the problem and data, we are now working on the data preparation and modeling before week 13. Blew is the draft of what achieved and planed so far for data preparation and modeling.  
 
 ## Data Preparation
 
@@ -109,23 +100,22 @@ After modeling is done, on week 14, we will step to the process of evaluation an
 
 - Precise description of modeling base tables.
 
-
-
   - What are the rows/columns of X (the predictors)?
 
+    After finalizing the data preparation, especially feature selection and construction, we will have a detailed explanation of X.
 
   - What is y (the target)?
 
-  The output data y for training and development data set is the win (1) or lose (0) label of the first team in the matchup for each game.
-  However, because we are predicting the winning probability by logistic model, the target of the deployment or the output of the model y is the probability that the first team (lowest team #) will win. To minimize duplication, team pairs are always listed with the smaller number team pair first.
+    The output data y for training and development data set is the win (1) or lose (0) label of the first team in the matchup for each game.
+    However, because we are predicting the winning probability by logistic model, the target of the deployment or the output of the model y is the probability that the first team (lowest team #) will win. To minimize duplication, team pairs are always listed with the smaller number team pair first.
 
 ## Modeling
 
-- What model are we using? Why?
+- Model that we are using
 
   We plan to use a logistic regression model as the base model because we are dealing with a binary outcome (win vs. loss), and predicting the winning probability of the first team in each matchup. But we will try the concept of bootstrapping from random forest to improve the model.
 
-- Assumptions?
+- Assumptions
 
   Because we are using the logistic regression, we assume
 
@@ -135,23 +125,11 @@ After modeling is done, on week 14, we will step to the process of evaluation an
 
   3. dependent (y) and independent (x) variables are linearly related to the log odds
 
-- Regularization?
+- Regularization
+
+  We will discuss the regularization after model is build.
 
 
-## Evaluation
+## Evaluation and Deployment
 
-- How well does the model perform?
-  - Accuracy
-  - ROC curves
-  - Cross-validation
-  - other metrics? performance?
-
-- AB test results (if any)
-
-## Deployment
-
-- How is the model deployed?
-  - prediction service?
-  - serialized model?
-  - regression coefficients?
-- What support is provided after initial deployment?
+After modeling is done, on week 14, we will step to the process of evaluation and deployment, which will be discussed in the coming groups meetings.  
