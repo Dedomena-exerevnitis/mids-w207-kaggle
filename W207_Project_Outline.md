@@ -18,78 +18,74 @@ In this project, the data sets include history data of tournaments and regular r
 
 - What are the raw data sources?
 
-Raw data sources include .csv files from Kaggle:
-1. WCities
-2. WGameCities
-3. WNCAATourneyCompactResults
-4. WNCAATourneyDetailedResults
-5. WNCAATourneySeeds
-6. WNCAATourneySeeds
-7. WRegularSeasonCompactResults
-8. WRegularSeasonDetailedResults
-9. WSeasons
-10. WTeams
-11. WTeamSpellings
+  Raw data sources include .csv files from Kaggle:
+  1. WCities
+  2. WGameCities
+  3. WNCAATourneyCompactResults
+  4. WNCAATourneyDetailedResults
+  5. WNCAATourneySeeds
+  6. WNCAATourneySeeds
+  7. WRegularSeasonCompactResults
+  8. WRegularSeasonDetailedResults
+  9. WSeasons
+  10. WTeams
+  11. WTeamSpellings
 
 - What does each 'unit' (e.g. row) of data represent?
 
-The bulk of the information we will be using for analysis are in the results from regular season and tournament games. Each unit of data represents a game that was played between two teams, and the fields are relevant statistics.
+  The bulk of the information we will be using for analysis are in the results from regular season and tournament games. Each unit of data represents a game that was played between two teams, and the fields are relevant statistics.
 
 - What are the fields (columns)?
 
-[JB] This includes game-level statistics such as: Season (year), Day number in the season the game was played, teams participating, final score, location, and number of overtimes. Additionally, it includes team-level statistics for each team: 2 pointers attempted/made, 3 pointers attempted/made, free throws attempted/made, offensive/defensive rebounds, assists, time outs, steals, blocks, and personal fouls.
+  This includes game-level statistics such as: Season (year), Day number in the season the game was played, teams participating, final score, location, and number of overtimes. Additionally, it includes team-level statistics for each team: 2 pointers attempted/made, 3 pointers attempted/made, free throws attempted/made, offensive/defensive rebounds, assists, time outs, steals, blocks, and personal fouls.
 
 - EDA
   - Distribution of each feature
 
-  - Overall understanding of tournaments and seeds
+    Historical data on games played in tournaments back to 1998. Of the 364 teams, 252 of them have participated in the NCAA March Madness tournament since 1998. Median = 3. Mean = 5.33. Mode = 0,1. Nonzeros: 252/364. This indicates that 1) not all teams make it to the tournament, even over a 20 year period. Also, a higher mean than median suggests a positive skew, meaning that there are several teams that have appeared many times in the tournament (max = 21; UConn, Notre Dame, Stanford, Tennessee), but most teams appear infrequently or not at all.
 
-  Historical data on games played in tournaments back to 1998. Of the 364 teams, 252 of them have participated in the NCAA March Madness tournament since 1998. Median = 3. Mean = 5.33. Mode = 0,1. Nonzeros: 252/364. This indicates that 1) not all teams make it to the tournament, even over a 20 year period. Also, a higher mean than median suggests a positive skew, meaning that there are several teams that have appeared many times in the tournament (max = 21; UConn, Notre Dame, Stanford, Tennessee), but most teams appear infrequently or not at all.
+    Our dataset also includes seeds for all teams in the tournament since 1998. Seeds are between 1 and 16, within each region (4 regions). Each year, there are 4 teams with seeds of each value. Some teams regularly perform well in the tournament, so we examined the average seed value for teams. The top 5 teams with the best (lowest) average seed are: UConn (1.24, 21 appearances), Duke (2, 20 appearances), Tennessee (2, 21 appearances), USC (2.56, 9 appearances), and Baylor (2.59, 17 appearances).
 
-  Our dataset also includes seeds for all teams in the tournament since 1998. Seeds are between 1 and 16, within each region (4 regions). Each year, there are 4 teams with seeds of each value. Some teams regularly perform well in the tournament, so we examined the average seed value for teams. The top 5 teams with the best (lowest) average seed are: UConn (1.24, 21 appearances), Duke (2, 20 appearances), Tennessee (2, 21 appearances), USC (2.56, 9 appearances), and Baylor (2.59, 17 appearances).
-
-  - Insight of features of field performance
-
-  There 13 field performance features for each team in each game of tournaments or regular seasons (FGM, FGA, FGM3, FGA3, FTM, FTA, OR, DR, Ast, TO, Stl, Blk, PF). PCA, as a tool to reduce the dimension and do the feature construction, is used to examine the feasibility of aggregate all the filed features in to one feature, overall performance. However, after PCA, the first dimension only weights the 40% of the total variance of all features, and in order to reach the 90% variance, 6 dimensions need to be kept, which violets the purpose of using PCA to aggregate  filed features into one. Therefore this case is not suitable for using PCA for feature construction or dimension reduction, we turn to use seek for other ways of feature selection and construction.   
-
-  Below is the insights of the relationship between those features and score margin :
-
-    *FGA* as field goal percentage: a higher field goal percentage difference is strongly associated with win margin.
-
-    *WFGM3/WFGA3 - LFGM3/LFGA3* as the 3 point field goal percentage difference: the correlation between 3 point field goal percentage difference and win margin is not too strong. This indicates that teams that win a game with a larger margin tend to have only slightly better 3 point field goal percentage than the losing team in that game.
-    Free throw performance by itself is not strongly associated with win margin. This is not surprising. Some teams have a lower 2 point field goal rate but they draw a larger number of personal fouls from the opposing team. This can lead to a difference in tactics of how the teams accumulate 2 point goals without impacting their overall success in scoring 2 point goals.
-
-    *(WOR + WDR) - (LOR + LDR)* as relative performance in offensive and defensive rebounds: it has a significant correlation with win margin
-
-    *WAst - LAst* as relative performance in assists: it has a strong correlation with win margin. Assists indicate a more orchestrated style of play and may be an indicator how a team collaborates and creates opportunities on the field.
-
-    *WStl - LStl* as relative performance in steals: it has a modest correlation with win margin.
-
-    *OR + DR* as the rebound performance: the winning team's rebound performance is strongly associated with the number of field goal attempts. The correlation is less strong for the losing team.
-
-  Then we explores how performance on different measures has impacted game outcomes over time. Over the years, the importance of field goal performance in determining game outcomes has remained constant whereas the importance of assists and rebounds in determining game outcomes has been rising.
 
   - Construction new feature, moving-average
 
-  [Arvindh] ADD HERE. It seems like Arvindh hasn't updated his file, so I only include the ideal of moving-average in the introduction of data understanding.
+    [Arvindh] ADD HERE. It seems like Arvindh hasn't updated his file, so I only include the ideal of moving-average in the introduction of data understanding.
 
 
 
   - Missing values
 
-  Right now, we do not see any missing values in the fields. There may be missing games (rows), but it is not apparent at this point. It would be too difficult to cross-reference every game played in the past 21 seasons, so we assume the data is complete.
+    Right now, we do not see any missing values in the fields. There may be missing games (rows), but it is not apparent at this point. It would be too difficult to cross-reference every game played in the past 21 seasons, so we assume the data is complete.
 
   - Distribution of target
 
-  The output data for training and development data set is the win or lose label for each game. Since each team is either win or lose the game, the distribution of output data is uniform distributed with equally probability of value 1 and 0.
+    The output data for training and development data set is the win or lose label for each game. Since each team is either win or lose the game, the distribution of output data is uniform distributed with equally probability of value 1 and 0.
 
   - Relationships between features
 
-  [Prashant] add notes about relationship between game stats
+    There 13 field performance features for each team in each game of tournaments or regular seasons (FGM, FGA, FGM3, FGA3, FTM, FTA, OR, DR, Ast, TO, Stl, Blk, PF). PCA, as a tool to reduce the dimension and do the feature construction, is used to examine the feasibility of aggregate all the filed features in to one feature, overall performance. However, after PCA, the first dimension only weights the 40% of the total variance of all features, and in order to reach the 90% variance, 6 dimensions need to be kept, which violets the purpose of using PCA to aggregate  filed features into one. Therefore this case is not suitable for using PCA for feature construction or dimension reduction, we turn to use seek for other ways of feature selection and construction.   
+
+    Below is the insights of the relationship between those features and score margin :
+
+      **FGA** as field goal percentage: a higher field goal percentage difference is strongly associated with win margin.
+
+      **WFGM3/WFGA3 - LFGM3/LFGA3** as the 3 point field goal percentage difference: the correlation between 3 point field goal percentage difference and win margin is not too strong. This indicates that teams that win a game with a larger margin tend to have only slightly better 3 point field goal percentage than the losing team in that game.
+      Free throw performance by itself is not strongly associated with win margin. This is not surprising. Some teams have a lower 2 point field goal rate but they draw a larger number of personal fouls from the opposing team. This can lead to a difference in tactics of how the teams accumulate 2 point goals without impacting their overall success in scoring 2 point goals.
+
+      **(WOR + WDR) - (LOR + LDR)** as relative performance in offensive and defensive rebounds: it has a significant correlation with win margin
+
+      **WAst - LAst** as relative performance in assists: it has a strong correlation with win margin. Assists indicate a more orchestrated style of play and may be an indicator how a team collaborates and creates opportunities on the field.
+
+      **WStl - LStl** as relative performance in steals: it has a modest correlation with win margin.
+
+      **OR + DR** as the rebound performance: the winning team's rebound performance is strongly associated with the number of field goal attempts. The correlation is less strong for the losing team.
+
+    Then we explores how performance on different measures has impacted game outcomes over time. Over the years, the importance of field goal performance in determining game outcomes has remained constant whereas the importance of assists and rebounds in determining game outcomes has been rising.
+
 
   - Other idiosyncracies?
 
-  [JB] One thing that was very apparent in EDA is the overall dominance of the University of Connecticut team in regular season and tournament games. As compared to NCAA men's basketball, where the....
+    [JB] One thing that was very apparent in EDA is the overall dominance of the University of Connecticut team in regular season and tournament games. As compared to NCAA men's basketball, where the....
 
 ## Ongoing work and plan for future  
 
