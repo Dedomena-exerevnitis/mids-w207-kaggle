@@ -1,39 +1,39 @@
 # W207 Final Project Outline - NCAA Women
 
-This project is to use the history data about women college basketball games (both tournament and regular season) and teams, on the purpose of predicting the winning probabilities for every possible matchup of teams of the 2018 NCAA tournament. After four group meetings and thorough discussion and analysis, so far, we have done the EDA with the process of business understanding and data understanding, and are working on the iterative process of data preparation and modeling. Below is the brief summary of the EDA，the ongoing work, and plan for completing the project.  
+This project is to use the history data about women's college basketball games (both tournament and regular season) and teams, with the purpose of predicting the winning probabilities for every possible matchup of teams of the 2018 NCAA tournament. After four group meetings and thorough discussion and analysis, so far, we have completed the EDA with the process of business understanding and data understanding, and are working on the iterative process of data preparation and modeling. Below is the brief summary of the EDA，the ongoing work, and plan for completing the project.  
 
 
 ## Business Understanding
 
-As mentioned in the brief introduction above, this project is on the purpose of modeling to predict the winning probabilities for every possible matchup of teams of the 2018 NCAA Women's tournament. The NCAA tournament is also well-known as March Madness, not only because it is happening in March, but also because the fast-pace elimination mechanism and the surprising results. Therefore, to build a better model and predict the result of the tournament is so interesting, and the prediction of the winning probabilities for every possible matchup become the first and critical part for predicting the NCAA bracket.  
+As mentioned in the brief introduction above, this purpose of this project is to build a model to predict the winning probabilities for every possible matchup of teams of the 2018 NCAA Women's basketball tournament. The NCAA tournament is also well-known as March Madness, not only because it is happening in March, but also because of the fast-paced elimination mechanism (single elimination) and the surprising results that often arise when pairing teams across leagues that have previously never played each other. Therefore, building a better model to predict the results of the tournament is interesting and difficult, and the prediction of the winning probabilities for every possible matchup becomes the first and most critical part for predicting the NCAA bracket.  
 
 
 ## Data Understanding
 
-In this project, the data sets include history data of tournaments and regular reason back to 1998, teams information, etc. We will focus on the data such as detailed fields performance data in tournaments and regular reason and seed number, dated back to a number of years or a number of games played (constructing new feature: moving-average), in order to explore the data and prepare for feature selection and construction.
+In this project, the data sets include historical data of tournaments and regular season games back to 1998, team information, etc. We will begin exploring the data such as detailed performance data for tournaments and regular season games and previous and current seed numbers in the tournament.
 
 - What are the raw data sources?
 
   Raw data sources include .csv files from Kaggle:
-  1. WCities
-  2. WGameCities
-  3. WNCAATourneyCompactResults
-  4. WNCAATourneyDetailedResults
-  5. WNCAATourneySeeds
-  6. WNCAATourneySeeds
-  7. WRegularSeasonCompactResults
-  8. WRegularSeasonDetailedResults
-  9. WSeasons
-  10. WTeams
-  11. WTeamSpellings
+  1. WCities - city number and associated English city/state names
+  2. WGameCities - winning team id, losing team id, and city id
+  3. WNCAATourneyCompactResults - season, day number, winning team id, winning score, losing team id, losing score, location, and number of overtimes for each tournament game since 1998
+  4. WNCAATourneyDetailedResults - in addition to the above, for each team, includes 2 pointers attempted/made, 3 pointers attempted/made, free throws attempted/made, offensive/defensive rebounds, assists, time outs, steals, blocks, and personal fouls for each tournament game since 1998
+  5. WNCAATourneySeeds - seed number and associated team for each tournament since 1998
+  6. WNCAATourneySlots - indicates seeds of teams that play at each round of 64 'slot'  
+  7. WRegularSeasonCompactResults - season, day number, winning team id, winning score, losing team id, losing score, location, and number of overtimes for each regular season game since 1998
+  8. WRegularSeasonDetailedResults - in addition to the above, for each team, includes 2 pointers attempted/made, 3 pointers attempted/made, free throws attempted/made, offensive/defensive rebounds, assists, time outs, steals, blocks, and personal fouls for each tournament game since 1998
+  9. WSeasons - locations of championship game played in each region for tournaments since 1998
+  10. WTeams - team id and associated English spelling team name
+  11. WTeamSpellings - alternative spellings and abbreviations for each team
 
 - What does each 'unit' (e.g. row) of data represent?
 
-  The bulk of the information we will be using for analysis are in the results from regular season and tournament games. Each unit of data represents a game that was played between two teams, and the fields are relevant statistics.
+  The bulk of the information we plan to use for analysis are in the detailed results from regular season and tournament games. Each unit of data represents a game that was played between two teams, and the fields are relevant statistics.
 
 - What are the fields (columns)?
 
-  This includes game-level statistics such as: Season (year), Day number in the season the game was played, teams participating, final score, location, and number of overtimes. Additionally, it includes team-level statistics for each team: 2 pointers attempted/made, 3 pointers attempted/made, free throws attempted/made, offensive/defensive rebounds, assists, time outs, steals, blocks, and personal fouls.
+  These include game-level statistics such as: season (year), day number in the season the game was played, teams participating, final score, location, and number of overtimes. Additionally, it includes team-level statistics for each team: 2 pointers attempted/made, 3 pointers attempted/made, free throws attempted/made, offensive/defensive rebounds, assists, time outs, steals, blocks, and personal fouls.
 
 - EDA
   - Distribution of each feature
@@ -41,10 +41,10 @@ In this project, the data sets include history data of tournaments and regular r
     [Arvindh] ADD HERE. It seems like Arvindh hasn't updated his file, so I only include the ideal of moving-average in the introduction of data understanding.
 
 
-    Historical data on games played in tournaments back to 1998. Of the 364 teams, 252 of them have participated in the NCAA March Madness tournament since 1998. Median = 3. Mean = 5.33. Mode = 0,1. Nonzeros: 252/364. This indicates that 1) not all teams make it to the tournament, even over a 20 year period. Also, a higher mean than median suggests a positive skew, meaning that there are several teams that have appeared many times in the tournament (max = 21; UConn, Notre Dame, Stanford, Tennessee), but most teams appear infrequently or not at all.
+    
+    Additionally, we explore the possibility of using past game performance (regular season and in the tournament) as a feature. Of the 364 teams, 252 of them have participated in the NCAA March Madness tournament at least once since 1998. Median = 3 appearances; mean = 5.33; mode = 0,1. Nonzeros: 252/364. This indicates that 1) not all teams make it to the tournament, even over a 21 year period. Also, a higher mean than median suggests a positive skew, meaning that there are several teams that have appeared many times in the tournament (max = 21; UConn, Notre Dame, Stanford, Tennessee), but most teams appear infrequently or not at all.
 
-    Our dataset also includes seeds for all teams in the tournament since 1998. Seeds are between 1 and 16, within each region (4 regions). Each year, there are 4 teams with seeds of each value. Some teams regularly perform well in the tournament, so we examined the average seed value for teams. The top 5 teams with the best (lowest) average seed are: UConn (1.24, 21 appearances), Duke (2, 20 appearances), Tennessee (2, 21 appearances), USC (2.56, 9 appearances), and Baylor (2.59, 17 appearances).
-
+    Our dataset also includes seeds for all teams in the tournament since 1998. Seeds are between 1 and 16, within each region (4 regions). Each year, there are 4 teams with seeds of each value. Some teams seem to regularly perform well in the tournament, so we examined the average seed value for teams. The top 5 teams with the best (lowest) average seed are: UConn (1.24, 21 appearances), Duke (2, 20 appearances), Tennessee (2, 21 appearances), USC (2.56, 9 appearances), and Baylor (2.59, 17 appearances).
 
   - Missing values
 
@@ -52,7 +52,7 @@ In this project, the data sets include history data of tournaments and regular r
 
   - Distribution of target
 
-    The output data for training and development data set is the win or lose label for each game. Since each team is either win or lose the game, the distribution of output data is uniform distributed with equally probability of value 1 and 0.
+    The output data for training and development data set is the win or lose label for each game. Since each team will either win or lose the game, the distribution of output data is uniform distributed with equally probability of value 1 and 0.
 
   - Relationships between features
 
@@ -79,6 +79,8 @@ In this project, the data sets include history data of tournaments and regular r
   - Other idiosyncracies?
 
     [JB] One thing that was very apparent in EDA is the overall dominance of the University of Connecticut team in regular season and tournament games. As compared to NCAA men's basketball, where the....
+    
+     [todo], dated back to a number of years or a number of games played (constructing new feature: moving-average), in order to explore the data and prepare for feature selection and construction.
 
 ## Ongoing work and plan for future  
 
