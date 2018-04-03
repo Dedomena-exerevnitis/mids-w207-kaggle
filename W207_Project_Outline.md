@@ -38,13 +38,13 @@ In this project, the data sets include historical data of tournaments and regula
 - EDA
   - Distribution of each feature
 
-    The count of winning times of each team from either tournament or regular season shows the overall performance of that team across years. Tops 5 count of winning time of regular season is UConn (632), Tennessee (554), Duke (544), Stanford (543), WI Green Bay (531). However, the count of winning times among top 15 teams are quite close to each other, indicating overall high performance of those team in regular season. Tops 5 count of winning time of tournament is UConn (93), Tennessee	(69), Duke (52), Stanford (52), Notre Dame (51). The top rankings of count in tournament is quite similar as that of regular season, indicating a consistent performance of each team from regular season to tournament.
+    The count of winning games of each team from either tournament or regular season shows the overall performance of that team across years. Tops 5 count of winning time of regular season is UConn (632), Tennessee (554), Duke (544), Stanford (543), WI Green Bay (531). However, the count of winning games among top 15 teams are quite close to each other, indicating overall high performance of those team in regular season. The top 5 count of winning games in the tournament is: UConn (93), Tennessee	(69), Duke (52), Stanford (52), and Notre Dame (51). We noticed that the top rankings of tournament game wins is quite similar to winning games in the regular season, indicating a consistent performance of each team from regular season to tournament.
 
-    Additionally, we explore the possibility of using past game performance (regular season and in the tournament) as a feature. Of the 364 teams, 252 of them have participated in the NCAA March Madness tournament at least once since 1998. Median = 3 appearances; mean = 5.33; mode = 0,1. Nonzeros: 252/364. This indicates that 1) not all teams make it to the tournament, even over a 21 year period. Also, a higher mean than median suggests a positive skew, meaning that there are several teams that have appeared many times in the tournament (max = 21; UConn, Notre Dame, Stanford, Tennessee), but most teams appear infrequently or not at all.
+    Additionally, we explored the possibility of using past game performance (regular season and in the tournament) as a feature. Of the 364 teams, 252 of them have participated in the NCAA March Madness tournament at least once since 1998. Median = 3 appearances; mean = 5.33; mode = 0,1. Nonzeros: 252/364. This indicates that 1) not all teams make it to the tournament, even over a 21 year period. Also, a higher mean than median suggests a positive skew, meaning that there are several teams that have appeared many times in the tournament (max = 21; UConn, Notre Dame, Stanford, Tennessee), but most teams appear infrequently or not at all.
 
     Our dataset also includes seeds for all teams in the tournament since 1998. Seeds are between 1 and 16, within each region (4 regions). Each year, there are 4 teams with seeds of each value. Some teams seem to regularly perform well in the tournament, so we examined the average seed value for teams. The top 5 teams with the best (lowest) average seed are: UConn (1.24, 21 appearances), Duke (2, 20 appearances), Tennessee (2, 21 appearances), USC (2.56, 9 appearances), and Baylor (2.59, 17 appearances).
 
-    As for the relevant fields statistics, we did the Kernel density estimation (KDE) plot to compare winning team and losing team. Almost all the fields metrics have similiar distribution between winning team and losing team. However, winning teams shows advantage in the means of Field Goal Percentage (FGP), 2 point field goal shooting (FGP2), 3 point field goal shooting (FGP3),and Assist Per Game (Ast), indicating those metrics maybe important features to examine in detail and be used in the modeling.  
+    For the relevant fields statistics, we did the Kernel density estimation (KDE) plot to compare the winning team and losing team. Almost all the fields metrics have similar distribution between winning team and losing team. However, winning teams show an advantage in the means of Field Goal Percentage (FGP), 2 point field goal shooting (FGP2), 3 point field goal shooting (FGP3),and Assist Per Game (Ast), indicating those metrics maybe important features to examine in detail and be used in the modeling.  
 
   - Missing values
 
@@ -64,22 +64,22 @@ In this project, the data sets include historical data of tournaments and regula
 
       **Field Goal Percentage Difference: WFGM/WFGA - LFGM/LFGA** Calculate the percentage of 2 point field goals made for winning and losing team, then determine the difference between the percentages. This field goal percentage difference is strongly associated with win margin.
 
-      **Three-Point Field Goal Percentage Difference: WFGM3/WFGA3 - LFGM3/LFGA3** Similar to the above, we were able to calcualte the percentage of 3 point field goals made for both winning and losing teams. The correlation between 3 point field goal percentage difference and win margin is not too strong. This suggests that teams that win a game with a larger margin tend to have only slightly better 3 point field goal percentage than the losing team in that game.
+      **Three-Point Field Goal Percentage Difference: WFGM3/WFGA3 - LFGM3/LFGA3** Similar to the above, we were able to calculate the percentage of 3 point field goals made for both winning and losing teams. The correlation between 3 point field goal percentage difference and win margin is not too strong. This suggests that teams that win a game with a larger margin tend to have only slightly better 3 point field goal percentage than the losing team in that game.
 
 
       **Free throw percentage: WFTM/WFTA** Free throw performance by itself is not strongly associated with win margin. This is not surprising. Some teams have a lower 2 point field goal rate but they draw a larger number of personal fouls from the opposing team. This can lead to a difference in tactics of how the teams accumulate 2 point goals without impacting their overall success in scoring 2 point goals.
 
       **Rebound difference: (WOR + WDR) - (LOR + LDR)** Determine the difference between the number of rebounds achieved (both defensive and offensive) of winning and losing teams. This indicates relative performance in offensive and defensive rebounds: it has a significant correlation with win margin.
+      
+      **OR + DR** as the rebound performance: the winning team's rebound performance is strongly associated with the number of field goal attempts. The correlation is less strong for the losing team.
 
       **Assist difference: WAst - LAst** as relative performance in assists: it has a strong correlation with win margin. Assists indicate a more orchestrated style of play and may be an indicator how a team collaborates and creates opportunities on the field.
 
       **Steal difference: WStl - LStl** as relative performance in steals: it has a modest correlation with win margin.
 
-      **OR + DR** as the rebound performance: the winning team's rebound performance is strongly associated with the number of field goal attempts. The correlation is less strong for the losing team.
+    Then we explored how performance on different measures has impacted game outcomes over time. Over the years, the importance of field goal performance in determining game outcomes has remained constant whereas the importance of assists and rebounds in determining game outcomes has been rising.
 
-    Then we explores how performance on different measures has impacted game outcomes over time. Over the years, the importance of field goal performance in determining game outcomes has remained constant whereas the importance of assists and rebounds in determining game outcomes has been rising.
-
-  - Other idiosyncracies?
+  - Other idiosyncrasies?
 
     One thing that was very apparent in EDA is the overall dominance of the University of Connecticut team (and several other teams such as Notre Dame or Tennessee) in regular season and tournament games. As compared to NCAA men's basketball, few teams regularly achieve success in regular season and tournament play, UConn and these other teams have been the best for many years in a row, suggesting some other factor besides player-level skills (since turnover in college basketball is relatively high) contributes to the success (such as a coach, etc.).
 
