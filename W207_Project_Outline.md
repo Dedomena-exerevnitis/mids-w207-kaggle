@@ -1,12 +1,13 @@
-# W207 Final Project Outline - NCAA Women
+# Forecasting Outcomes of 2018 Women’s March Madness
+## W207 Final Project 
+## Julia Buffinton, Charlene Chen, Arvindh Ganesan,  Prashant Kumar Sahay
+### Due: 4/17/18
 
-This project is to use the history data about women's college basketball games (both tournament and regular season) and teams, with the purpose of predicting the winning probabilities for every possible matchup of teams of the 2018 NCAA tournament. After four group meetings and thorough discussion and analysis, so far, we have completed the EDA with the process of business understanding and data understanding, and are working on the iterative process of data preparation and modeling. Below is the brief summary of the EDA，the ongoing work, and plan for completing the project.  
-
+In this project, we use historical data about NCAA Division I women's college basketball games (both tournament and regular season) and teams, with the goal of predicting the winning probabilities for every possible matchup of teams of the 2018 NCAA "March Madness" tournament.  
 
 ## Business Understanding
 
-As mentioned in the brief introduction above, the purpose of this project is to build a model to predict the winning probabilities for every possible matchup of teams of the 2018 NCAA Women's basketball tournament. The NCAA tournament is also well-known as March Madness, not only because it is happening in March, but also because of the fast-paced elimination mechanism (single elimination) and the surprising results that often arise when pairing teams across leagues that have previously never played each other. Therefore, building a better model to predict the results of the tournament is interesting and difficult, and the prediction of the winning probabilities for every possible matchup becomes the first and most critical part for predicting the NCAA bracket.  
-
+As mentioned in the brief introduction above, the purpose of this project is to build a model to predict the outcome probabilities for every possible matchup of teams of the 2018 NCAA Division I Women's Basketball Tournament. The NCAA tournament is also well-known as March Madness, not only because it occurs annually in March, but also because of the fast-paced elimination mechanism (single elimination) and the surprising results that often arise when pairing teams across leagues that have previously never played each other (upsets where the lower-seeded team defeats the higher-seeded team). Therefore, building a better model to predict the results of the tournament is interesting and difficult, and the prediction of the winning probabilities for every possible matchup becomes the first and most critical part for predicting the NCAA bracket.  
 
 ## Data Understanding
 
