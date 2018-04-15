@@ -1,12 +1,13 @@
-# W207 Final Project Outline - NCAA Women
+# Forecasting Outcomes of 2018 Women’s March Madness
+## W207 Final Project 
+## Julia Buffinton, Charlene Chen, Arvindh Ganesan,  Prashant Kumar Sahay
+### Due: 4/17/18
 
-This project is to use the history data about women's college basketball games (both tournament and regular season) and teams, with the purpose of predicting the winning probabilities for every possible matchup of teams of the 2018 NCAA tournament. After four group meetings and thorough discussion and analysis, so far, we have completed the EDA with the process of business understanding and data understanding, and are working on the iterative process of data preparation and modeling. Below is the brief summary of the EDA，the ongoing work, and plan for completing the project.  
-
+In this project, we use historical data about NCAA Division I women's college basketball games (both tournament and regular season) and teams, with the goal of predicting the winning probabilities for every possible matchup of teams of the 2018 NCAA "March Madness" tournament.  
 
 ## Business Understanding
 
-As mentioned in the brief introduction above, the purpose of this project is to build a model to predict the winning probabilities for every possible matchup of teams of the 2018 NCAA Women's basketball tournament. The NCAA tournament is also well-known as March Madness, not only because it is happening in March, but also because of the fast-paced elimination mechanism (single elimination) and the surprising results that often arise when pairing teams across leagues that have previously never played each other. Therefore, building a better model to predict the results of the tournament is interesting and difficult, and the prediction of the winning probabilities for every possible matchup becomes the first and most critical part for predicting the NCAA bracket.  
-
+As mentioned in the brief introduction above, the purpose of this project is to build a model to predict the outcome probabilities for every possible matchup of teams of the 2018 NCAA Division I Women's Basketball Tournament. The NCAA tournament is also well-known as March Madness, not only because it occurs annually in March, but also because of the fast-paced elimination mechanism (single elimination) and the surprising results that often arise when pairing teams across leagues that have previously never played each other (upsets where the lower-seeded team defeats the higher-seeded team). Therefore, building a better model to predict the results of the tournament is interesting and difficult, and the prediction of the winning probabilities for every possible matchup becomes the first and most critical part for predicting the NCAA bracket.  
 
 ## Data Understanding
 
@@ -70,7 +71,7 @@ In this project, the data sets include historical data of tournaments and regula
       **Free throw percentage: WFTM/WFTA** Free throw performance by itself is not strongly associated with win margin. This is not surprising. Some teams have a lower 2 point field goal rate but they draw a larger number of personal fouls from the opposing team. This can lead to a difference in tactics of how the teams accumulate 2 point goals without impacting their overall success in scoring 2 point goals.
 
       **Rebound difference: (WOR + WDR) - (LOR + LDR)** Determine the difference between the number of rebounds achieved (both defensive and offensive) of winning and losing teams. This indicates relative performance in offensive and defensive rebounds: it has a significant correlation with win margin.
-      
+
       **OR + DR** as the rebound performance: the winning team's rebound performance is strongly associated with the number of field goal attempts. The correlation is less strong for the losing team.
 
       **Assist difference: WAst - LAst** as relative performance in assists: it has a strong correlation with win margin. Assists indicate a more orchestrated style of play and may be an indicator how a team collaborates and creates opportunities on the field.
@@ -85,9 +86,6 @@ In this project, the data sets include historical data of tournaments and regula
 
      On that note, we plan to continue to explore the appropriate amount of data that should be used to predict tournament success. For example, it seems unlikely that performance in games in 1998 indicates success of a completely new team in 2018. We hypothesize that approximately a 5-year window may be most informative.
 
-## Ongoing work and plan for future  
-
-After this EDA and preliminary data understanding, we are now working on the data preparation and modeling before week 13. Below is the draft of what achieved and planed so far for data preparation and modeling.  
 
 ## Data Preparation
 
@@ -135,6 +133,87 @@ After this EDA and preliminary data understanding, we are now working on the dat
   We will discuss the regularization after model is build.
 
 
-## Evaluation and Deployment
+## Evaluation
 
-After modeling is done, on week 14, we will discuss the process of evaluation and deployment, which will be discussed in the coming groups meetings.  
+- Log Loss
+
+  - Log Loss is the most important classification metric based on probabilities. It is also a key way of evaluation of our prediction from Kaggle NCAA page.
+  - It is also called the Log Likelihood Function. The log of the likelihood that the 2018 tournament bracket actually happens based on our prediction of wining probability of each team matchups.
+
+  $$
+  LogLoss = \sum_{i=1}^{n} [y_i log(\hat{y_i})+(1-y_i) log(1-\hat{y_i})]
+  $$
+
+  - The result will be a negative number that's in a range computers keep track of. However, Scikit-learn has a conventin in its metrics that lower scores are better.
+      - So, scikit-learn report $$-1* \frac{LogLoss}{NumObservations}$$
+
+  $$
+  LogLoss = -\frac{1}{n} \sum_{i=1}^{n} [y_i log(\hat{y_i})+(1-y_i) log(1-\hat{y_i})]
+  $$
+
+      The division by the number of datapoints is used so the range of values doesn't systematically vary with the dataset size.
+      - The rage of that is 0 to infinit.
+      - The lower the metrix is, the better model performance is.
+  - Log loss penalizes both types of errors, but especially those predications that are confident and wrong.
+
+  - In our case, the Log Loss value is ......
+
+- Accuracy
+
+  - Accuracy measures a fraction of the classifier's predictions that are correct.
+  - In our case, the accuracy is ...
+
+- F1 measure with Cross Validation
+
+  - **Precision** is the fraction of positive predictions that are correct, which means the team who we predicts as winner that are actually winner.
+      - (TP = True Positive, FP = False Positive)
+
+  $$ P = \frac{TP}{TP+FP}$$
+
+
+  - **Recall**, the true positive rate, is the fraction of the truly positive instances that the classifier recognizes. A recall score of one indicates that the classifier did not make any false negative predictions.
+  In our case, recall is the fraction of winner team that were truly classified as winner, according to our prediction of winning proberbility.
+      - (TP = True Positive, FN = False Negative)
+
+  $$ P = \frac{TP}{TP+FN}$$
+
+  - In our case, the precis- The **F1 measure** is the harmonic mean, or weighted average, of the precision and recall scores. Also called the f-measure or the f-score.
+    - (P = precision, R = recall)
+    $$ F1 = 2 \frac{PR}{P+R}$$
+
+
+  - The F1 measure penalizes classifiers with imbalanced precision and recall scores, like the trivial classifier that always predicts the positive class.
+  - A model with perfect precision and recall scores will achieve an F1 score of 1. A model with a perfect precision score and a recall score of zero will achieve an F1 score of 0.
+  - Models are sometimes evaluated using the F0.5 and F2 scores, which favor precision over recall and recall over precision, respectively.ion and recalls are...
+
+  - - The **F1 measure** is the harmonic mean, or weighted average, of the precision and recall scores. Also called the f-measure or the f-score.
+    - (P = precision, R = recall)
+    $$ F1 = 2 \frac{PR}{P+R}$$
+
+
+  - The F1 measure penalizes classifiers with imbalanced precision and recall scores, like the trivial classifier that always predicts the positive class.
+  - A model with perfect precision and recall scores will achieve an F1 score of 1. A model with a perfect precision score and a recall score of zero will achieve an F1 score of 0.
+  - Models are sometimes evaluated using the F0.5 and F2 scores, which favor precision over recall and recall over precision, respectively.
+  - In our case, the arithmetic mean of our classifier's precision and recall scores is 0.77. As the difference between the classifier's precision and recall is small, the F1 measure's penalty is small.
+
+- ROC Curve
+
+  - Receiver Operating Characteristic, or ROC curve, visualizes a classifier's performance.
+  - ROC curve illustrates the classifier's performance for all values of the discrimination threshold.
+      - The true positive rate (Sensitivity, Recall ) is plotted in function of the false positive rate (100-Specificity, Fall-out) for different cut-off points.
+      - Each point on the ROC curve represents a sensitivity/specificity pair corresponding to a particular decision threshold.
+  - AUC is the area under the ROC curve; it reduces the ROC curve to a single value, which represents the expected performance of the classifier.
+  - The dashed line in the following figure is for a classifier that predicts classes randomly; it has an AUC of 0.5. The solid curve is for a classifier that outperforms random guessing.
+  - A test with perfect discrimination (no overlap in the two distributions) has a ROC curve that passes through the upper left corner (100% sensitivity, 100% specificity). Therefore the closer the ROC curve is to the upper left corner, the higher the overall accuracy of the test (Zweig & Campbell, 1993)
+
+  - In our case, the ROC curve ......
+
+- Summary
+
+  After checking Log Loss, Accuracy, Precision and recall, F1 measure, and ROC Curve, the model....
+
+## Deployment
+
+- This model is used to predict the winning percentage of the every possible 2016 matchups in the 2018 NCAA Tournament Women's. Once the tournament begins and we have the bracket frame, with the threshold of 50% winning probability, the model can help users predict the total bracket including the winner of the tournament.
+
+- To extend the model, if rolling the date set years forward, users can also use this model to predict the winning probability of NCAA Tournament Women's of year 2019, 2020, so on and so forth. However, as time goes by, the effectiveness of the model may change by rules, environment, players, fundings, etc. So, adjusting the model accordingly, is necessary for the forture years prediction and coreponding support will be provided by be provided by the team for users.
