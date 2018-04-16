@@ -112,6 +112,46 @@ In this project, the data sets include historical data of tournaments and regula
 
     However, because we are predicting the winning probability by logistic model, the target of the deployment or the output of the model _y_ is the probability that the first team (lowest team #) will win. To minimize duplication, team pairs are always listed with the smaller number team id first.
 
+
+Feature Engineering:
+
+Our EDA identified significant correlations between a team’s performance during the regular season and its wins during the tournament. Based on the findings of the EDA, we utilized both regular season and tournament data for feature development. The following regular season data was used for feature development:
+•	Field goals attempted
+•	Field goals made
+•	Free throws attempted
+•	Free throws made
+•	Blocks
+•	Rebounds
+•	Assists
+•	Steals
+•	2 point goals
+•	3 point goals
+
+We calculated intrinsic percentage-based features as follows:
+•	Field goal percentage = Field goals made / Field goals attempted
+•	Free throw percentage = Free throws made / Field goals attempted
+
+In addition, we synthesized the concepts of Point Opportunity Developed (POD) and Opportunity Conversion Rate (OCR). The concept of Point Opportunity Developed (POD) represents the effectiveness with which a team develops new opportunities. It is defined as:
+
+POD = three-point goals attempted * 3 + two-point goals attempted * 2 + free throws attempted * 1
+
+The concept of Opportunity Conversion Rate (OCR) represents the effectiveness with which a team seizes an opportunity to score. It is defined as:
+
+OCR = score in the game / point opportunity developed
+
+Features related to tournament performance were calculated cross sectionally. For example, we compared league performance across time periods to operationalize the notion of a league’s relative strength.  The relative strength of the a league is intended to be used to normalize teams’ performance during the regular season.
+
+a league’s performance in tournaments across multiple years was calculated 
+Feature Scaling and Standardization:
+
+All features were calculated the performance of a team during a season and within a league. We calculated the features in following steps:
+1.	Aggregation: Calculate the performance of a team within season and league
+2.	Centering: De-mean the data by subtracting the corresponding league level mean
+3.	Normalization: Rescale by dividing by the corresponding league level standard deviation
+4.	Binning: To dampen the effect of small variations (noise)
+
+Later in the project, we utilize these binned features as ordinal measures.
+
 ## Modeling
 
 - Model that we are using
@@ -131,6 +171,14 @@ In this project, the data sets include historical data of tournaments and regula
 - Regularization
 
   We will discuss the regularization after model is build.
+
+We used an ensemble approach to modeling by combining Naïve Bayes, Random Forest, and Logistic Regression. We used a cross-validation training dataset to generate first stage classification using Naïve Bayes and Random Forest models. In the second stage, we used the first stage classifiers as features to generate the final classification log probabilities.
+
+We ran into overfitting issues with SVM and random forest classifiers. We were getting very impressive log losses with training data but the models did not generalize well to test data. This is probably due to the fact that we have less than a thousand tournament match ups but over 25 synthesized features. To produce generalizable models we reduced the dimensionality of data using PCA. This resulted in models that did not fit or predict well.
+
+Our approach of using the 2017 data as a test set also caused issues. Although we used cross validation to select models, we think that some of our modeling decisions were based on how well the model performed with test data. As a result, in hindsight, we ended up selecting models that did well with 2017 data but did not generalize as well to future years. In hindsight, it is critically important to maintain heterogeneity in training and test data sets to ensure that we do not optimize models to a particular kind of data generating process (in this case, the 2017 tournament).
+
+
 
 
 ## Evaluation
