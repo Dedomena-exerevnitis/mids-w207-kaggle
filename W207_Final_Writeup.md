@@ -108,11 +108,15 @@ We calculated intrinsic percentage-based features as follows:
 
 In addition, we synthesized the concepts of Point Opportunity Developed (POD) and Opportunity Conversion Rate (OCR). The concept of Point Opportunity Developed (POD) represents the effectiveness with which a team develops new opportunities to score. It is defined as:
 
-$$ POD = three-point goals attempted * 3 + two-point goals attempted * 2 + free throws attempted * 1 $$
+$$ 
+POD = three-point goals attempted * 3 + two-point goals attempted * 2 + free throws attempted * 1 
+$$
 
 The concept of Opportunity Conversion Rate (OCR) represents the effectiveness with which a team successfully executes on its PODs. It is defined as:
 
-$$OCR = score in the game / point opportunity developed $$
+$$
+OCR = score in the game / point opportunity developed 
+$$
 
 To calculate win probability, we first aggregated field statistics listed above (two pointers attempted, assists, etc.) for each team in each season. 
 
@@ -181,15 +185,20 @@ In the evaluation session, we first compared various performances of optimal mod
   $$
 
   - The result will be a negative number that's in a range computers keep track of. However, Scikit-learn has a convention in its metrics that lower scores are better.
-      - So, scikit-learn report $$-1* \frac{LogLoss}{NumObservations}$$
+      - So, scikit-learn report 
+
+  
+  $$
+  -1* \frac{LogLoss}{NumObservations}
+  $$
 
   $$
   LogLoss = -\frac{1}{n} \sum_{i=1}^{n} [y_i log(\hat{y_i})+(1-y_i) log(1-\hat{y_i})]
   $$
-
-      The division by the number of datapoints is used so the range of values doesn't systematically vary with the dataset size.
+      - The division by the number of datapoints is used so the range of values doesn't systematically vary with the dataset size.
       - The rage of that is 0 to infinity.
       - The lower the metrics is, the better model performance is.
+      
   - Log loss penalizes both types of errors, but especially those predictions that are confident and wrong.
 
   - The Log Loss value of optimal model is 0.44228, which is a very good outcome, better than the baseline model by 0.015.
